@@ -29,7 +29,7 @@ public class OwnerRepository_Tests
     public void GetOne_ShouldGetOneOwnerEntity_AndReturnOneOwnerEntity()
     {
         //Arrange
-        new AddressRepository(_context).Create(new AddressEntity { StreetName = "Test", PostalCode = "Test", City = "Test" });
+        new AddressRepository(_context).Create(new AddressEntity { StreetName = "Test", PostalCode ="Test", City="Test"});
         var ownerRepository = new OwnerRepository(_context);
         var testOwnerEntity = new OwnerEntity { OwnerName = "Test", PhoneNumber = 123, AddressId = 1, Email = "Test" };
         ownerRepository.Create(testOwnerEntity);
