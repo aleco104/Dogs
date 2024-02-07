@@ -18,6 +18,7 @@ public class MenuService
     public void MainMenu()
     {
         Console.WriteLine(":::: MAIN MENU ::::");
+        Console.WriteLine();
         Console.WriteLine($"{"1.",-4} View/Edit Owners");
         Console.WriteLine($"{"2.",-4} View/Edit Dogs");
         Console.WriteLine();
@@ -45,8 +46,10 @@ public class MenuService
         {
             Console.Clear();
             Console.WriteLine(":::: OWNER MENU OPTIONS ::::");
+            Console.WriteLine();
             Console.WriteLine($"{"1.",-4} Add New Owner");
             Console.WriteLine($"{"2.",-4} Show All Owners");
+            Console.WriteLine($"{"3.",-4} Delete Owner");
             Console.WriteLine($"{"0.",-4} Exit Application");
             Console.WriteLine();
             Console.Write("Enter Menu Option: ");
@@ -111,7 +114,7 @@ public class MenuService
 
         if (result == true)
         {
-            Console.WriteLine("Owner created successfully!");
+            Console.WriteLine("Owner was created successfully!");
         }
         else
         {
@@ -120,13 +123,56 @@ public class MenuService
         Console.ReadKey();
     }
 
-    public void DogMainMenu()
+    public void ShowAllOwnersMenu()
     {
         Console.Clear();
 
+        Console.WriteLine(":::: LIST OF ALL OWNERS ::::");
+        var result = _ownerService.GetAllOwners();
+
+        foreach (var owner in result)
+        {
+            Console.WriteLine();
+            Console.Write($"Owner ID: {owner.OwnerId}. | ");
+            Console.Write($"Name: {owner.OwnerName} | ");
+            Console.Write($"Email Address: {owner.Email} | ");
+        }
+        Console.ReadKey();
+    }
+
+    public void DeleteOwnerMenu()
+    {
+        Console.Clear();
+        Console.WriteLine(":::: DELETE OWNER ::::");
+        Console.WriteLine();
+        Console.Write("Enter ID of the owner to delete: ");
+        int ownerToDelete = int.Parse(Console.ReadLine()!);
+
+        var result = _ownerService.DeleteOwner(ownerToDelete);
+
+        if (result)
+        {
+            Console.WriteLine("Owner was deleted!");
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong. Please try again.");
+        }
+
+        Console.ReadKey();
+    }
+
+
+    // -------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public void DogMainMenu()
+    {
         while (true)
         {
+            Console.Clear();
             Console.WriteLine(":::: DOG MENU OPTIONS ::::");
+            Console.WriteLine();
             Console.WriteLine($"{"1.",-4} Add New Dog");
             Console.WriteLine($"{"2.",-4} Update Dog Information");
             Console.WriteLine($"{"3.",-4} Show One Dog");
@@ -165,12 +211,12 @@ public class MenuService
         }
     }
 
-    public void AddDogMenu() 
+    public void AddDogMenu()
     {
         Console.Clear();
         Console.WriteLine(":::: ADD DOG MENU ::::");
         Console.WriteLine();
-        
+
         Console.Write("Birthdate YYYY-MM-DD: ");
         var birthDate = DateTime.Parse(Console.ReadLine()!);
 
@@ -196,7 +242,7 @@ public class MenuService
         var kennel = Console.ReadLine()!;
 
         var result = _dogService.AddDog(birthDate, birthName, nickName, sex, color, breed, ownerId, kennel);
-            
+
         if (result == true)
         {
             Console.WriteLine("Dog created successfully!");
@@ -208,16 +254,94 @@ public class MenuService
         Console.ReadKey();
     }
 
-    public void DeleteOwnerMenu() { }
-    public void ShowAllOwnersMenu() { }
+    public void ShowOneDogMenu()
+    {
+        Console.Clear();
+        Console.WriteLine(":::: SHOW ONE DOG ::::");
+        Console.WriteLine("Enter ID of the dog you would like to view: ");
+        int dogId = int.Parse(Console.ReadLine()!);
 
-    
-    public void DeleteDogMenu() { }
-    public void ShowAllDogsMenu() { }
-    public void ShowOneDogMenu() { }
-    public void UpdateDogMenu() { }
+        var result = _dogService.GetOneDog(dogId);
 
+        Console.WriteLine();
+        Console.WriteLine($"Birth name: {result.BirthName}");
+        Console.WriteLine($"Nickname: {result.NickName}");
+        Console.WriteLine($"Sex: {result.Sex}");
+        Console.WriteLine($"Color: {result.Color.ColorName}");
+        Console.WriteLine($"Breed: {result.Breed.BreedName}");
+        Console.WriteLine($"Kennel: {result.Kennel.KennelName}");
+        Console.Write($"Owner ID: {result.Owner.OwnerId}.   ");
+        Console.Write($"Owner: {result.Owner.OwnerName}");
+        Console.ReadKey();
+    }
+
+    public void ShowAllDogsMenu()
+    {
+        Console.Clear();
+
+        Console.WriteLine(":::: LIST OF ALL DOGS ::::");
+        var result = _dogService.GetAllDogs();
+
+        foreach (var dog in result)
+        {
+            Console.WriteLine();
+            Console.Write($"Dog ID: {dog.DogId} | ");
+            Console.Write($"Birth name: {dog.BirthName} | ");
+            Console.Write($"Nickname: {dog.NickName} | ");
+            Console.Write($"Sex: {dog.Sex} | ");
+            Console.Write($"Breed: {dog.Breed.BreedName} | ");
+            Console.WriteLine();
+            Console.Write($"Owner ID: {dog.Owner.OwnerId} | ");
+            Console.Write($"Owner: {dog.Owner.OwnerName} | ");
+            Console.WriteLine();
+        }
+        Console.ReadKey();
+    }
+
+    public void DeleteDogMenu() 
+    { 
+        Console.Clear();
+        Console.WriteLine(":::: DELETE OWNER ::::");
+        Console.WriteLine();
+        Console.Write("Enter ID of the dog to delete: ");
+        int dogIdToDelete = int.Parse(Console.ReadLine()!);
+
+        var result = _dogService.DeleteDog(dogIdToDelete);
+
+        if (result)
+        {
+            Console.WriteLine("Dog was successfully deleted!");
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong. Please try again.");
+        }
+
+        Console.ReadKey();
+    }
+
+    public void UpdateDogMenu() 
+    {
+        Console.Clear();
+        Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
+        Console.WriteLine();
+        Console.Write("Enter ID of the dog to update: ");
+        int dogIdToUpdate = int.Parse(Console.ReadLine()!);
+
+        var result = _dogService.UpdateDog(dogIdToUpdate);
+
+        if (result)
+        {
+            Console.WriteLine("Dog was successfully updated!");
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong. Please try again.");
+        }
+
+        Console.ReadKey();
+    }
+}    
     
-    
-}
+
 

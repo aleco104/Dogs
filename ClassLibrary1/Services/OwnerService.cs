@@ -12,12 +12,12 @@ public class OwnerService(AddressRepository addressRepository, OwnerRepository o
     public bool AddOwner(string name, int phoneNumber, string email, string streetName, string postalCode, string city)
     {
        try
-        {   //hämtar en adress med samma indata som ovan:
+        {   
             var result = _addressRepository.GetOne(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
-            if (result == null) //om det inte finns någon likadan adress registrerad:
+            if (result == null) 
             {
                 var address = new AddressEntity { City = city, PostalCode = postalCode, StreetName = streetName };
-                result = _addressRepository.Create(address); //lägg till den som en ny AddressEntity
+                result = _addressRepository.Create(address); 
             }
 
             var owner = new OwnerEntity { OwnerName = name, Email = email, PhoneNumber = phoneNumber, AddressId = result.AddressId };
@@ -30,6 +30,30 @@ public class OwnerService(AddressRepository addressRepository, OwnerRepository o
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
         
+        return false;
+    }
+
+    public IEnumerable<OwnerEntity>GetAllOwners()
+    {
+        try
+        {
+            var result = _ownerRepository.GetAll();
+            return result;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        return null!;
+    }    
+    
+    public bool DeleteOwner(int ownerId)
+    {
+        try
+        {
+            var result = _ownerRepository.Delete(x => x.OwnerId == ownerId);
+            return result;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
         return false;
     }
 }

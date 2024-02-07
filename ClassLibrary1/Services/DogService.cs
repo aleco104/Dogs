@@ -1,5 +1,6 @@
 ﻿using ClassLibrary1.Entities;
 using ClassLibrary1.Repositories;
+using System.Diagnostics;
 
 namespace ClassLibrary1.Services;
 
@@ -41,8 +42,55 @@ public class DogService(DogRepository dogRepository, ColorRepository colorReposi
             var dogEntity = new DogEntity { BirthDate = birthDate, BirthName = birthName, NickName = nickName, Sex = sex, ColorId = colorId, BreedId = breedId, OwnerId = ownerId, KennelId = kennelId };
             var result = _dogRepository.Create(dogEntity);
         }
-        catch { }
-        
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        return true;
+    }
+
+    public DogEntity GetOneDog(int dogId)
+    {
+        try
+        {
+            var result = _dogRepository.GetOne(x => x.DogId == dogId);
+            return result;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        return null!;
+    }
+
+    public IEnumerable<DogEntity>GetAllDogs()
+    {
+        try
+        {
+            var result = _dogRepository.GetAll();
+            return result;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        return null!;
+    }
+
+    public bool DeleteDog(int dogId)
+    {
+        try
+        {
+            var result = _dogRepository.Delete(x => x.OwnerId == dogId);
+            return result;
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
+        return false;
+    }
+
+    public bool UpdateDog(int dogId)
+    {
+        try
+        {
+            
+        }
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
         return true;
     }
 }
