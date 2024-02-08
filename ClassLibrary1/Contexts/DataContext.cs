@@ -22,14 +22,3 @@ public class DataContext : DbContext
 }
 
 
-//public DataContext()
-//{
-//}
-//public DataContext(DbContextOptions options) : base(options)
-//{
-//}
-//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//{
-//    optionsBuilder.UseInMemoryDatabase($"{Guid.NewGuid()}");
-//}
-//public DbSet<ProductEntity> Products { get; set; }

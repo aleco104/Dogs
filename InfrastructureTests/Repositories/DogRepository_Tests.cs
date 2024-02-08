@@ -29,7 +29,6 @@ public class DogRepository_Tests
     public void GetOne_ShouldGetOneDogEntity_AndReturnOneDogEntity()
     {
         //Arrange
-        
         new BreedRepository(_context).Create(new BreedEntity { BreedName = "Test", SizeClass = "Test" });
         new ColorRepository(_context).Create(new ColorEntity { ColorName = "Test" });
         new KennelRepository(_context).Create(new KennelEntity { KennelName = "Test" });

@@ -8,35 +8,41 @@ public class MenuService
 {
     private readonly OwnerService _ownerService;
     private readonly DogService _dogService;
+    private readonly ProductService _productService;
 
-    public MenuService(OwnerService ownerService, DogService dogService)
+    public MenuService(OwnerService ownerService, DogService dogService, ProductService productService)
     {
         _ownerService = ownerService;
         _dogService = dogService;
+        _productService = productService;
     }
 
     public void MainMenu()
     {
         Console.WriteLine(":::: MAIN MENU ::::");
         Console.WriteLine();
-        Console.WriteLine($"{"1.",-4} View/Edit Owners");
-        Console.WriteLine($"{"2.",-4} View/Edit Dogs");
+        Console.WriteLine($"{"1.",-4} Manage Owners");
+        Console.WriteLine($"{"2.",-4} Manage Dogs");
+        Console.WriteLine($"{"3.",-4} Manage Products");
         Console.WriteLine();
         Console.Write("Enter Menu Option: ");
-        var choice = int.Parse(Console.ReadLine()!);
+        var option = Console.ReadLine();
 
-        if (choice == 1)
+        switch (option)
         {
-            OwnerMainMenu();
-        }
-        else if (choice == 2)
-        {
-            DogMainMenu();
-        }
-        else
-        {
-            Console.WriteLine("Invalid Option. Press any key to try again.");
-            Console.ReadKey();
+            case "1":
+                OwnerMainMenu();
+                break;
+            case "2":
+                DogMainMenu();
+                break;
+            case "3":
+                ProductMainMenu();
+                break;
+            default:
+                Console.WriteLine("\nInvalid Option. Press any key to try again.");
+                Console.ReadKey();
+                break;
         }
     }
 
@@ -70,7 +76,7 @@ public class MenuService
                     ExitApplication();
                     break;
                 default:
-                    Console.WriteLine("\nInvalid Option Selected. Press any key to try agan.");
+                    Console.WriteLine("\nInvalid Option. Press any key to try again.");
                     Console.ReadKey();
                     break;
             }
@@ -204,7 +210,7 @@ public class MenuService
                     ExitApplication();
                     break;
                 default:
-                    Console.WriteLine("\nInvalid Option Selected. Press any key to try agan.");
+                    Console.WriteLine("\nInvalid Option. Press any key to try again.");
                     Console.ReadKey();
                     break;
             }
@@ -322,25 +328,109 @@ public class MenuService
 
     public void UpdateDogMenu() 
     {
-        Console.Clear();
-        Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
-        Console.WriteLine();
-        Console.Write("Enter ID of the dog to update: ");
-        int dogIdToUpdate = int.Parse(Console.ReadLine()!);
+        //Console.Clear();
+        //Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
+        //Console.WriteLine();
+        //Console.Write("Enter ID of the dog to update: ");
+        //int dogIdToUpdate = int.Parse(Console.ReadLine()!);
 
-        var result = _dogService.UpdateDog(dogIdToUpdate);
+        //var result = _dogService.UpdateDog(dogIdToUpdate);
 
-        if (result)
+        //if (result)
+        //{
+        //    Console.WriteLine("Dog was successfully updated!");
+        //}
+        //else
+        //{
+        //    Console.WriteLine("Something went wrong. Please try again.");
+        //}
+
+        //Console.ReadKey();
+    }
+
+    //----------------------------------------------------------------------------------------------------------
+
+    public void ProductMainMenu()
+    {
+        while (true)
         {
-            Console.WriteLine("Dog was successfully updated!");
+            Console.Clear();
+            Console.WriteLine(":::: PRODUCT MENU OPTIONS ::::");
+            Console.WriteLine();
+            Console.WriteLine($"{"1.",-4} Add New Product");
+            Console.WriteLine($"{"2.",-4} Show One Product");
+            Console.WriteLine($"{"3.",-4} Show All Products");
+            Console.WriteLine($"{"4.",-4} Delete Product");
+            Console.WriteLine($"{"0.",-4} Exit Application");
+            Console.WriteLine();
+            Console.Write("Enter Menu Option: ");
+            var option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    AddProductMenu();
+                    break;
+                case "2":
+                    ShowOneProductMenu();
+                    break;
+                case "3":
+                    ShowAllProductsMenu();
+                    break;
+                case "4":
+                    DeleteProductMenu();
+                    break;
+                case "0":
+                    ExitApplication();
+                    break;
+                default:
+                    Console.WriteLine("\nInvalid Option. Press any key to try again.");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    public void AddProductMenu() 
+    {
+        Console.Clear();
+        Console.WriteLine(":::: ADD PRODUCT MENU ::::");
+        Console.WriteLine();
+        Console.Write("Product name: ");
+        var productName = Console.ReadLine()!;
+
+        Console.Write("Price: ");
+        decimal price = decimal.Parse(Console.ReadLine()!);
+
+        Console.Write("Category name: ");
+        var categoryName = Console.ReadLine()!;
+
+        Console.Write("Manufacturer: ");
+        var manufacturerName = Console.ReadLine()!;
+
+        Console.Write("Target animal: ");
+        var animalName = Console.ReadLine()!;
+
+        var result = _productService.AddProduct(productName, price, categoryName, manufacturerName, animalName);
+
+        if (result == true)
+        {
+            Console.WriteLine("Product was created successfully!");
         }
         else
         {
-            Console.WriteLine("Something went wrong. Please try again.");
+            Console.WriteLine("Product was not created. Please try again.");
         }
-
         Console.ReadKey();
     }
+
+    public void ShowOneProductMenu() { }
+
+    public void ShowAllProductsMenu() { }
+
+    public void DeleteProductMenu() { }
+
+
 }    
     
 
