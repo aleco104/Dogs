@@ -55,7 +55,7 @@ public class DogService_Tests
         var result = _dogService.GetOneDog(1);
 
         //Assert
-        Assert.IsType<DogEntity>(result);
+        Assert.IsType<ProductEntity>(result);
         Assert.Equal(1, result.DogId);
     }
 
@@ -80,7 +80,32 @@ public class DogService_Tests
 
         //Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IEnumerable<DogEntity>>(result);
+        Assert.IsAssignableFrom<IEnumerable<ProductEntity>>(result);
+    }
+
+    [Fact]
+    public void UpdateDog_ShouldUpdateDogEntity_AndReturnTrue()
+    {
+        //Arrange
+        var _breedRepository = new BreedRepository(_context);
+        var _colorRepository = new ColorRepository(_context);
+        var _dogRepository = new DogRepository(_context);
+        var _kennelRepository = new KennelRepository(_context);
+        var _ownerRepository = new OwnerRepository(_context);
+        var _addressRepository = new AddressRepository(_context);
+        var _ownerService = new OwnerService(_addressRepository, _ownerRepository);
+        var _dogService = new DogService(_dogRepository, _colorRepository, _breedRepository, _kennelRepository);
+
+        _ownerService.AddOwner("Test", 12345, "Test", "Test", "Test", "Test");
+        _dogService.AddDog(DateTime.Now, "Test", "Test", "Test", "Test", "Test", 1, "Test");
+
+        //Act
+        var result = _dogService.UpdateDog(1, DateTime.Now, "Test2", "Test2", "Test2", "Test2", "Test2", 1, "Test2");
+        var dogEntity = _dogService.GetOneDog(1);
+
+        //Assert
+        Assert.True(result);
+        Assert.Equal("Test2", dogEntity.NickName);
     }
 
     [Fact]

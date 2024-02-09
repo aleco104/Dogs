@@ -117,6 +117,7 @@ public class MenuService
         var city = Console.ReadLine()!;
 
         var result = _ownerService.AddOwner(name, phoneNumber, email, streetName, postalCode, city);
+        Console.Clear();
 
         if (result == true)
         {
@@ -131,10 +132,9 @@ public class MenuService
 
     public void ShowAllOwnersMenu()
     {
-        Console.Clear();
-
-        Console.WriteLine(":::: LIST OF ALL OWNERS ::::");
         var result = _ownerService.GetAllOwners();
+        Console.Clear();
+        Console.WriteLine(":::: LIST OF ALL OWNERS ::::");
 
         foreach (var owner in result)
         {
@@ -155,6 +155,7 @@ public class MenuService
         int ownerToDelete = int.Parse(Console.ReadLine()!);
 
         var result = _ownerService.DeleteOwner(ownerToDelete);
+        Console.Clear();
 
         if (result)
         {
@@ -248,6 +249,7 @@ public class MenuService
         var kennel = Console.ReadLine()!;
 
         var result = _dogService.AddDog(birthDate, birthName, nickName, sex, color, breed, ownerId, kennel);
+        Console.Clear();
 
         if (result == true)
         {
@@ -264,30 +266,38 @@ public class MenuService
     {
         Console.Clear();
         Console.WriteLine(":::: SHOW ONE DOG ::::");
-        Console.WriteLine("Enter ID of the dog you would like to view: ");
+        Console.WriteLine();
+        Console.Write("Enter ID of the dog you would like to view: ");
         int dogId = int.Parse(Console.ReadLine()!);
 
         var result = _dogService.GetOneDog(dogId);
+        Console.Clear();
 
-        Console.WriteLine();
-        Console.WriteLine($"Birth name: {result.BirthName}");
-        Console.WriteLine($"Nickname: {result.NickName}");
-        Console.WriteLine($"Sex: {result.Sex}");
-        Console.WriteLine($"Color: {result.Color.ColorName}");
-        Console.WriteLine($"Breed: {result.Breed.BreedName}");
-        Console.WriteLine($"Kennel: {result.Kennel.KennelName}");
-        Console.Write($"Owner ID: {result.Owner.OwnerId}.   ");
-        Console.Write($"Owner: {result.Owner.OwnerName}");
+        if (result != null)
+        {
+            Console.WriteLine(":::: DOG INFORMATION ::::");
+            Console.WriteLine($"Birth name: {result.BirthName}");
+            Console.WriteLine($"Nickname: {result.NickName}");
+            Console.WriteLine($"Sex: {result.Sex}");
+            Console.WriteLine($"Color: {result.Color.ColorName}");
+            Console.WriteLine($"Breed: {result.Breed.BreedName}");
+            Console.WriteLine($"Kennel: {result.Kennel.KennelName}");
+            Console.Write($"Owner ID: {result.Owner.OwnerId}.   ");
+            Console.Write($"Owner: {result.Owner.OwnerName}");
+        }
+        else
+        {
+            Console.WriteLine("Dog was not found.");
+        }
         Console.ReadKey();
     }
 
     public void ShowAllDogsMenu()
     {
+        var result = _dogService.GetAllDogs();
         Console.Clear();
 
         Console.WriteLine(":::: LIST OF ALL DOGS ::::");
-        var result = _dogService.GetAllDogs();
-
         foreach (var dog in result)
         {
             Console.WriteLine();
@@ -313,6 +323,7 @@ public class MenuService
         int dogIdToDelete = int.Parse(Console.ReadLine()!);
 
         var result = _dogService.DeleteDog(dogIdToDelete);
+        Console.Clear();
 
         if (result)
         {
@@ -328,24 +339,96 @@ public class MenuService
 
     public void UpdateDogMenu() 
     {
-        //Console.Clear();
-        //Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
-        //Console.WriteLine();
-        //Console.Write("Enter ID of the dog to update: ");
-        //int dogIdToUpdate = int.Parse(Console.ReadLine()!);
+        Console.Clear();
+        Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
+        Console.WriteLine();
+        Console.Write("Enter ID of the dog to update: ");
+        int dogIdToUpdate = int.Parse(Console.ReadLine()!);
 
-        //var result = _dogService.UpdateDog(dogIdToUpdate);
+        var result = _dogService.GetOneDog(dogIdToUpdate);
+        Console.Clear();
+        
+        if (result != null)
+        {
+            Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
+            Console.WriteLine();
+            Console.WriteLine($"Birth date: {result.BirthDate}");
+            Console.WriteLine($"Birth name: {result.BirthName}");
+            Console.WriteLine($"Nickname: {result.NickName}");
+            Console.WriteLine($"Sex: {result.Sex}");
+            Console.WriteLine($"Color: {result.Color.ColorName}");
+            Console.WriteLine($"Breed: {result.Breed.BreedName}");
+            Console.WriteLine($"Kennel: {result.Kennel.KennelName}");
+            Console.Write($"Owner ID: {result.Owner.OwnerId}.   ");
+            Console.Write($"Owner: {result.Owner.OwnerName}");
+            Console.WriteLine("\n");
 
-        //if (result)
-        //{
-        //    Console.WriteLine("Dog was successfully updated!");
-        //}
-        //else
-        //{
-        //    Console.WriteLine("Something went wrong. Please try again.");
-        //}
+            Console.Write("New birthdate YYYY-MM-DD: ");
+            var birthDate = DateTime.Parse(Console.ReadLine()!);
 
-        //Console.ReadKey();
+            Console.Write("New birthname: ");
+            var birthName = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(birthName))
+            {
+                birthName = result.BirthName;
+            }
+
+            Console.Write("New nickname: ");
+            var nickName = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(nickName))
+            {
+                nickName = result.NickName;
+            }
+
+            Console.Write("New sex (Male/Female): ");
+            var sex = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(sex))
+            {
+                sex = result.Sex;
+            }
+
+            Console.Write("New color: ");
+            var color = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(color))
+            {
+                color = result.Color.ColorName;
+            }
+
+            Console.Write("New breed: ");
+            var breed = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(breed))
+            {
+                breed = result.Breed.BreedName;
+            }
+
+            Console.Write("New owner ID: ");
+            var ownerId = int.Parse(Console.ReadLine()!);
+
+            Console.Write("New kennel name: ");
+            var kennel = Console.ReadLine()!;
+            if (string.IsNullOrEmpty(kennel))
+            {
+                kennel = result.Kennel.KennelName;
+            }
+
+            var updatedDog = _dogService.UpdateDog(dogIdToUpdate, birthDate, birthName, nickName!, sex, color, breed, ownerId, kennel);
+            Console.Clear();
+
+            if (updatedDog)
+            {
+                Console.WriteLine("Dog was successfully updated!");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong. Please try again.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Dog was not found.");
+        }
+
+        Console.ReadKey();
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -412,6 +495,7 @@ public class MenuService
         var animalName = Console.ReadLine()!;
 
         var result = _productService.AddProduct(productName, price, categoryName, manufacturerName, animalName);
+        Console.Clear();
 
         if (result == true)
         {
@@ -424,13 +508,76 @@ public class MenuService
         Console.ReadKey();
     }
 
-    public void ShowOneProductMenu() { }
+    public void ShowOneProductMenu() 
+    {
+        Console.Clear();
+        Console.WriteLine(":::: SHOW ONE PRODUCT ::::\n");
+        Console.Write("Enter ID of the product you would like to view: ");
+        int productId = int.Parse(Console.ReadLine()!);
 
-    public void ShowAllProductsMenu() { }
+        var result = _productService.GetOneProduct(productId);
+        Console.Clear();
 
-    public void DeleteProductMenu() { }
+        if (result!=null)
+        {
+            Console.WriteLine(":::: SHOW ONE PRODUCT ::::");
+            Console.WriteLine();
+            Console.WriteLine($"Product: {result.ProductId}");
+            Console.WriteLine($"Product: {result.ProductName}");
+            Console.WriteLine($"Price: {result.Price:0.00}");
+            Console.WriteLine($"Category: {result.Category!.CategoryName}");
+            Console.WriteLine($"Manufacturer: {result.Manufacturer!.ManufacturerName}");
+            Console.WriteLine($"Animal: {result.Animal!.AnimalName}");
+        }
+        else
+        {
+            Console.WriteLine("Product was not found.");
+        }
+        Console.ReadKey();
 
+    }
 
+    public void ShowAllProductsMenu() 
+    { 
+        var result = _productService.GetAllProducts();
+        Console.Clear();
+        Console.WriteLine(":::: LIST OF ALL PRODUCTS ::::");
+
+        foreach (var product in result)
+        {
+            Console.WriteLine();
+            Console.Write($"Article number: {product.ProductId} | ");
+            Console.Write($"Product: {product.ProductName} | ");
+            Console.Write($"Price: {product.Price:0.00} | ");
+            Console.Write($"Category: {product.Category!.CategoryName} | ");
+            Console.Write($"Manufacturer: {product.Manufacturer!.ManufacturerName}");
+            Console.WriteLine();
+        }
+        Console.ReadKey();
+    }
+
+    public void DeleteProductMenu() 
+    {
+        Console.Clear();
+        Console.WriteLine(":::: DELETE PRODUCT ::::");
+        Console.WriteLine();
+        Console.Write("Enter ID of the product to delete: ");
+        int productIdToDelete = int.Parse(Console.ReadLine()!);
+
+        var result = _productService.DeleteProduct(productIdToDelete);
+        Console.Clear();
+
+        if (result)
+        {
+            Console.WriteLine("Product was successfully deleted!");
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong. Please try again.");
+        }
+
+        Console.ReadKey();
+    }
 }    
     
 

@@ -22,7 +22,7 @@ public class DogRepository_Tests
         var result = dogRepository.GetAll();
 
         //Assert
-        Assert.IsAssignableFrom<IEnumerable<DogEntity>>(result);
+        Assert.IsAssignableFrom<IEnumerable<ProductEntity>>(result);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class DogRepository_Tests
         new OwnerRepository( _context ).Create(new OwnerEntity { OwnerName = "Test", AddressId = 1, Email="test@test.com", PhoneNumber = 13245 });
 
         var dogRepository = new DogRepository(_context);
-        var testDogEntity = new DogEntity { 
+        var testDogEntity = new ProductEntity { 
             BirthName = "Test",
             BirthDate = DateTime.Now,
             NickName = "Test",

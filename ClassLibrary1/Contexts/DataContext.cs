@@ -16,7 +16,7 @@ public class DataContext : DbContext
     public virtual DbSet<AddressEntity> Addresses { get; set; }
     public virtual DbSet<BreedEntity> Breeds { get; set; }
     public virtual DbSet<ColorEntity> Colors { get; set; }
-    public virtual DbSet<DogEntity> Dogs { get; set; }
+    public virtual DbSet<ProductEntity> Dogs { get; set; }
     public virtual DbSet<KennelEntity> Kennels { get; set; }
     public virtual DbSet<OwnerEntity> Owners { get; set; }
 }

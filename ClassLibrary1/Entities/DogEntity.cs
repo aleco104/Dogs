@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassLibrary1.Entities;
 
-public class DogEntity
+public class ProductEntity
 {
     [Key]
     public int DogId { get; set; }

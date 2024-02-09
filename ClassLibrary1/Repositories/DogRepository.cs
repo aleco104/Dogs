@@ -7,11 +7,11 @@ using System.Linq.Expressions;
  
 namespace ClassLibrary1.Repositories;
 
-public class DogRepository(DataContext context) : Repo<DogEntity>(context)
+public class DogRepository(DataContext context) : Repo<ProductEntity>(context)
 {
     private readonly DataContext _context = context;
 
-    public override IEnumerable<DogEntity> GetAll()
+    public override IEnumerable<ProductEntity> GetAll()
     {
         try
         {
@@ -26,7 +26,7 @@ public class DogRepository(DataContext context) : Repo<DogEntity>(context)
         return null!;
     }
 
-    public override DogEntity GetOne(Expression<Func<DogEntity, bool>> predicate)
+    public override ProductEntity GetOne(Expression<Func<ProductEntity, bool>> predicate)
     {
         try
         {
