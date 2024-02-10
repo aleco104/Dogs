@@ -19,11 +19,17 @@ public class MenuService
 
     public void MainMenu()
     {
-        Console.WriteLine(":::: MAIN MENU ::::");
+        Console.Clear();
+        Console.WriteLine(":::: DOG DATABASE - MAIN MENU ::::");
         Console.WriteLine();
-        Console.WriteLine($"{"1.",-4} Manage Owners");
-        Console.WriteLine($"{"2.",-4} Manage Dogs");
-        Console.WriteLine($"{"3.",-4} Manage Products");
+        Console.WriteLine($"{"1.",-4} Add New Dog");
+        Console.WriteLine($"{"2.",-4} Update Dog Information");
+        Console.WriteLine($"{"3.",-4} Show One Dog");
+        Console.WriteLine($"{"4.",-4} Show All Dogs");
+        Console.WriteLine($"{"5.",-4} Delete Dog");
+        Console.WriteLine($"{"6.",-4} Manage Owners");
+        Console.WriteLine($"{"7.",-4} Manage Products");
+        Console.WriteLine($"{"0.",-4} Exit Application");
         Console.WriteLine();
         Console.Write("Enter Menu Option: ");
         var option = Console.ReadLine();
@@ -31,12 +37,24 @@ public class MenuService
         switch (option)
         {
             case "1":
-                OwnerMainMenu();
+                AddDogMenu();
                 break;
             case "2":
-                DogMainMenu();
+                UpdateDogMenu();
                 break;
             case "3":
+                ShowOneDogMenu();
+                break;
+            case "4":
+                ShowAllDogsMenu();
+                break;
+            case "5":
+                DeleteDogMenu();
+                break;
+            case "6":
+                OwnerMainMenu();
+                break;
+            case "7":
                 ProductMainMenu();
                 break;
             default:
@@ -56,7 +74,7 @@ public class MenuService
             Console.WriteLine($"{"1.",-4} Add New Owner");
             Console.WriteLine($"{"2.",-4} Show All Owners");
             Console.WriteLine($"{"3.",-4} Delete Owner");
-            Console.WriteLine($"{"0.",-4} Exit Application");
+            Console.WriteLine($"{"0.",-4} Go to main menu");
             Console.WriteLine();
             Console.Write("Enter Menu Option: ");
             var option = Console.ReadLine();
@@ -73,7 +91,7 @@ public class MenuService
                     DeleteOwnerMenu();
                     break;
                 case "0":
-                    ExitApplication();
+                    MainMenu();
                     break;
                 default:
                     Console.WriteLine("\nInvalid Option. Press any key to try again.");
@@ -172,52 +190,6 @@ public class MenuService
 
     // -------------------------------------------------------------------------------------------------------------------------------------
 
-
-    public void DogMainMenu()
-    {
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine(":::: DOG MENU OPTIONS ::::");
-            Console.WriteLine();
-            Console.WriteLine($"{"1.",-4} Add New Dog");
-            Console.WriteLine($"{"2.",-4} Update Dog Information");
-            Console.WriteLine($"{"3.",-4} Show One Dog");
-            Console.WriteLine($"{"4.",-4} Show All Dogs");
-            Console.WriteLine($"{"5.",-4} Delete Dog");
-            Console.WriteLine($"{"0.",-4} Exit Application");
-            Console.WriteLine();
-            Console.Write("Enter Menu Option: ");
-            var option = Console.ReadLine();
-
-            switch (option)
-            {
-                case "1":
-                    AddDogMenu();
-                    break;
-                case "2":
-                    UpdateDogMenu();
-                    break;
-                case "3":
-                    ShowOneDogMenu();
-                    break;
-                case "4":
-                    ShowAllDogsMenu();
-                    break;
-                case "5":
-                    DeleteDogMenu();
-                    break;
-                case "0":
-                    ExitApplication();
-                    break;
-                default:
-                    Console.WriteLine("\nInvalid Option. Press any key to try again.");
-                    Console.ReadKey();
-                    break;
-            }
-        }
-    }
-
     public void AddDogMenu()
     {
         Console.Clear();
@@ -276,6 +248,8 @@ public class MenuService
         if (result != null)
         {
             Console.WriteLine(":::: DOG INFORMATION ::::");
+            Console.WriteLine();
+            Console.WriteLine($"Birth date: {result.BirthDate.ToString("yyyy-MM-dd")}");
             Console.WriteLine($"Birth name: {result.BirthName}");
             Console.WriteLine($"Nickname: {result.NickName}");
             Console.WriteLine($"Sex: {result.Sex}");
@@ -352,7 +326,7 @@ public class MenuService
         {
             Console.WriteLine(":::: UPDATE DOG INFORMATION ::::");
             Console.WriteLine();
-            Console.WriteLine($"Birth date: {result.BirthDate}");
+            Console.WriteLine($"Birth date: {result.BirthDate.ToString("yyyy-MM-dd")}");
             Console.WriteLine($"Birth name: {result.BirthName}");
             Console.WriteLine($"Nickname: {result.NickName}");
             Console.WriteLine($"Sex: {result.Sex}");
@@ -444,7 +418,7 @@ public class MenuService
             Console.WriteLine($"{"2.",-4} Show One Product");
             Console.WriteLine($"{"3.",-4} Show All Products");
             Console.WriteLine($"{"4.",-4} Delete Product");
-            Console.WriteLine($"{"0.",-4} Exit Application");
+            Console.WriteLine($"{"0.",-4} Go to main menu");
             Console.WriteLine();
             Console.Write("Enter Menu Option: ");
             var option = Console.ReadLine();
@@ -464,7 +438,7 @@ public class MenuService
                     DeleteProductMenu();
                     break;
                 case "0":
-                    ExitApplication();
+                    MainMenu();
                     break;
                 default:
                     Console.WriteLine("\nInvalid Option. Press any key to try again.");
@@ -534,7 +508,6 @@ public class MenuService
             Console.WriteLine("Product was not found.");
         }
         Console.ReadKey();
-
     }
 
     public void ShowAllProductsMenu() 
@@ -553,6 +526,7 @@ public class MenuService
             Console.Write($"Manufacturer: {product.Manufacturer!.ManufacturerName}");
             Console.WriteLine();
         }
+
         Console.ReadKey();
     }
 
